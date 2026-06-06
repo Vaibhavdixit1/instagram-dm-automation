@@ -1,4 +1,24 @@
 import Link from "next/link";
+import {
+  MessageCircle,
+  Sparkles,
+  Repeat,
+  Send,
+  Tags,
+  BarChart3,
+  Check,
+} from "lucide-react";
+
+import { GetStartedDialog } from "@/components/get-started-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 const NAV = [
   { label: "Features", href: "#features" },
@@ -10,32 +30,32 @@ const FEATURES = [
   {
     title: "Keyword auto-replies",
     body: "Trigger a DM the moment someone comments a keyword on your post or reel. No more manual replies at 2am.",
-    icon: "💬",
+    icon: MessageCircle,
   },
   {
     title: "Story reply funnels",
     body: "Capture every story reply and route it into a branching flow that qualifies leads while you sleep.",
-    icon: "✨",
+    icon: Sparkles,
   },
   {
     title: "Smart drip sequences",
     body: "Send timed follow-ups that feel personal. Pause, branch, or hand off to a human at any step.",
-    icon: "🔁",
+    icon: Repeat,
   },
   {
     title: "Comment-to-DM",
     body: "Auto-reply publicly, then slide into the DMs with the link, code, or offer they asked for.",
-    icon: "📨",
+    icon: Send,
   },
   {
     title: "Audience tags",
     body: "Segment people by what they clicked, replied, or bought. Build lists that actually convert.",
-    icon: "🏷️",
+    icon: Tags,
   },
   {
     title: "Live analytics",
     body: "See open rates, reply rates, and revenue per flow in real time. Double down on what works.",
-    icon: "📊",
+    icon: BarChart3,
   },
 ];
 
@@ -98,82 +118,74 @@ const PLANS = [
 
 export default function Home() {
   return (
-    <div className="flex min-h-full flex-col bg-white text-zinc-900">
+    <div className="flex min-h-full flex-col bg-background text-foreground">
       {/* Nav */}
-      <header className="sticky top-0 z-20 border-b border-zinc-100/80 bg-white/80 backdrop-blur">
+      <header className="sticky top-0 z-20 border-b bg-background/80 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 text-sm text-white">
-              ◎
+            <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <MessageCircle className="h-4 w-4" />
             </span>
             DMFlow
           </Link>
-          <div className="hidden items-center gap-8 text-sm text-zinc-600 md:flex">
+          <div className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
             {NAV.map((item) => (
-              <a key={item.href} href={item.href} className="hover:text-zinc-900">
+              <a key={item.href} href={item.href} className="transition-colors hover:text-foreground">
                 {item.label}
               </a>
             ))}
           </div>
-          <div className="flex items-center gap-3 text-sm">
-            <a href="#" className="hidden text-zinc-600 hover:text-zinc-900 sm:inline">
-              Log in
-            </a>
-            <a
-              href="#pricing"
-              className="rounded-full bg-zinc-900 px-4 py-2 font-medium text-white transition hover:bg-zinc-700"
-            >
-              Get started
-            </a>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="lg"
+              nativeButton={false}
+              className="hidden sm:inline-flex"
+              render={<a href="#">Log in</a>}
+            />
+            <GetStartedDialog trigger={<Button size="lg">Get started</Button>} />
           </div>
         </nav>
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-[42rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-amber-200 via-pink-300 to-purple-300 opacity-40 blur-3xl" />
+      <section className="border-b">
         <div className="mx-auto flex max-w-6xl flex-col items-center px-6 py-24 text-center">
-          <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-4 py-1.5 text-xs font-medium text-zinc-600">
-            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+          <Badge variant="secondary" className="mb-6 gap-2">
+            <span className="h-1.5 w-1.5 rounded-full bg-foreground" />
             Now with reel comment triggers
-          </span>
+          </Badge>
           <h1 className="max-w-3xl text-balance text-5xl font-bold tracking-tight sm:text-6xl">
-            Turn your Instagram DMs into a{" "}
-            <span className="bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-              sales machine
-            </span>
+            Turn your Instagram DMs into a sales machine
           </h1>
-          <p className="mt-6 max-w-xl text-lg text-zinc-600">
+          <p className="mt-6 max-w-xl text-lg text-muted-foreground">
             Automate replies to comments, story responses, and keywords — so every
             follower gets an instant, on-brand conversation that converts.
           </p>
           <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row">
-            <a
-              href="#pricing"
-              className="rounded-full bg-gradient-to-tr from-pink-500 to-purple-600 px-7 py-3 font-medium text-white shadow-lg shadow-pink-500/20 transition hover:opacity-90"
-            >
-              Automate my DMs free
-            </a>
-            <a
-              href="#how"
-              className="rounded-full border border-zinc-200 px-7 py-3 font-medium text-zinc-700 transition hover:bg-zinc-50"
-            >
-              See how it works
-            </a>
+            <GetStartedDialog
+              trigger={<Button size="lg">Automate my DMs free</Button>}
+            />
+            <Button
+              size="lg"
+              variant="outline"
+              nativeButton={false}
+              render={<a href="#how">See how it works</a>}
+            />
           </div>
-          <p className="mt-4 text-xs text-zinc-400">
+          <p className="mt-4 text-xs text-muted-foreground">
             No credit card required · Set up in under 5 minutes
           </p>
         </div>
       </section>
 
       {/* Logos / social proof */}
-      <section className="border-y border-zinc-100 bg-zinc-50/60">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-12 gap-y-4 px-6 py-8 text-sm font-medium text-zinc-400">
+      <section className="border-b bg-muted/40">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-12 gap-y-4 px-6 py-8 text-sm font-medium text-muted-foreground">
           <span>Trusted by 12,000+ creators &amp; brands</span>
-          <span className="hidden h-4 w-px bg-zinc-200 sm:block" />
+          <span className="hidden h-4 w-px bg-border sm:block" />
           <span>⭐ 4.9/5 average rating</span>
-          <span className="hidden h-4 w-px bg-zinc-200 sm:block" />
+          <span className="hidden h-4 w-px bg-border sm:block" />
           <span>2.4M+ DMs automated weekly</span>
         </div>
       </section>
@@ -184,47 +196,52 @@ export default function Home() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Everything you need to never miss a DM
           </h2>
-          <p className="mt-4 text-zinc-600">
+          <p className="mt-4 text-muted-foreground">
             Build powerful automations with a simple, visual editor — then let DMFlow
             do the talking.
           </p>
         </div>
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map((f) => (
-            <div
-              key={f.title}
-              className="group rounded-2xl border border-zinc-100 bg-white p-6 transition hover:border-zinc-200 hover:shadow-lg hover:shadow-zinc-100"
-            >
-              <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-100 via-pink-100 to-purple-100 text-xl">
-                {f.icon}
-              </div>
-              <h3 className="font-semibold">{f.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-600">{f.body}</p>
-            </div>
+            <Card key={f.title} className="transition-shadow hover:shadow-md">
+              <CardHeader>
+                <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-xl bg-muted text-foreground">
+                  <f.icon className="h-5 w-5" />
+                </div>
+                <CardTitle className="text-base">{f.title}</CardTitle>
+                <CardDescription className="leading-relaxed">
+                  {f.body}
+                </CardDescription>
+              </CardHeader>
+            </Card>
           ))}
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how" className="bg-zinc-50/60 py-24">
+      <section id="how" className="border-y bg-muted/40 py-24">
         <div className="mx-auto max-w-6xl px-6">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
               Live in three steps
             </h2>
-            <p className="mt-4 text-zinc-600">
+            <p className="mt-4 text-muted-foreground">
               From signup to your first automated conversation in minutes.
             </p>
           </div>
           <div className="mt-16 grid gap-8 md:grid-cols-3">
             {STEPS.map((s) => (
-              <div key={s.step} className="relative rounded-2xl bg-white p-8 shadow-sm">
-                <span className="bg-gradient-to-tr from-pink-500 to-purple-600 bg-clip-text text-5xl font-bold text-transparent">
-                  {s.step}
-                </span>
-                <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-600">{s.body}</p>
-              </div>
+              <Card key={s.step} className="[--card-spacing:--spacing(8)]">
+                <CardContent>
+                  <span className="text-5xl font-bold text-muted-foreground/40">
+                    {s.step}
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {s.body}
+                  </p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
@@ -236,106 +253,92 @@ export default function Home() {
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             Simple, honest pricing
           </h2>
-          <p className="mt-4 text-zinc-600">
+          <p className="mt-4 text-muted-foreground">
             Start free. Upgrade when your DMs start paying for themselves.
           </p>
         </div>
-        <div className="mt-16 grid gap-6 lg:grid-cols-3">
+        <div className="mt-16 grid items-start gap-6 lg:grid-cols-3">
           {PLANS.map((p) => (
-            <div
+            <Card
               key={p.name}
-              className={`flex flex-col rounded-2xl border p-8 ${
-                p.highlight
-                  ? "border-transparent bg-gradient-to-b from-zinc-900 to-zinc-800 text-white shadow-xl"
-                  : "border-zinc-200 bg-white"
+              className={`[--card-spacing:--spacing(8)] ${
+                p.highlight ? "ring-2 ring-primary" : ""
               }`}
             >
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold">{p.name}</h3>
-                {p.highlight && (
-                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium">
-                    Most popular
-                  </span>
-                )}
-              </div>
-              <div className="mt-6 flex items-end gap-1">
-                <span className="text-4xl font-bold">{p.price}</span>
-                <span
-                  className={`pb-1 text-sm ${
-                    p.highlight ? "text-zinc-300" : "text-zinc-500"
-                  }`}
-                >
-                  {p.note}
-                </span>
-              </div>
-              <ul className="mt-6 flex-1 space-y-3 text-sm">
-                {p.perks.map((perk) => (
-                  <li key={perk} className="flex items-start gap-2">
-                    <span
-                      className={
-                        p.highlight ? "text-pink-400" : "text-purple-600"
-                      }
+              <CardContent className="flex flex-col">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">{p.name}</h3>
+                  {p.highlight && <Badge>Most popular</Badge>}
+                </div>
+                <div className="mt-6 flex items-end gap-1">
+                  <span className="text-4xl font-bold">{p.price}</span>
+                  <span className="pb-1 text-sm text-muted-foreground">{p.note}</span>
+                </div>
+                <ul className="mt-6 space-y-3 text-sm">
+                  {p.perks.map((perk) => (
+                    <li key={perk} className="flex items-start gap-2">
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span className="text-foreground">{perk}</span>
+                    </li>
+                  ))}
+                </ul>
+                <GetStartedDialog
+                  defaultPlan={p.name.toLowerCase() as "starter" | "growth" | "scale"}
+                  trigger={
+                    <Button
+                      size="lg"
+                      variant={p.highlight ? "default" : "outline"}
+                      className="mt-8 w-full"
                     >
-                      ✓
-                    </span>
-                    <span className={p.highlight ? "text-zinc-200" : "text-zinc-700"}>
-                      {perk}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-              <a
-                href="#"
-                className={`mt-8 rounded-full px-5 py-3 text-center text-sm font-medium transition ${
-                  p.highlight
-                    ? "bg-gradient-to-tr from-pink-500 to-purple-600 text-white hover:opacity-90"
-                    : "bg-zinc-900 text-white hover:bg-zinc-700"
-                }`}
-              >
-                {p.cta}
-              </a>
-            </div>
+                      {p.cta}
+                    </Button>
+                  }
+                />
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
 
       {/* CTA */}
       <section className="mx-auto max-w-6xl px-6 pb-24">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600 px-8 py-16 text-center text-white">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.25),transparent_60%)]" />
-          <h2 className="relative text-3xl font-bold tracking-tight sm:text-4xl">
-            Ready to stop typing the same reply?
-          </h2>
-          <p className="relative mx-auto mt-4 max-w-md text-white/90">
-            Join thousands of creators automating their DMs and growing on autopilot.
-          </p>
-          <a
-            href="#pricing"
-            className="relative mt-8 inline-block rounded-full bg-white px-8 py-3 font-medium text-zinc-900 transition hover:bg-zinc-100"
-          >
-            Get started — it&apos;s free
-          </a>
-        </div>
+        <Card className="bg-primary text-primary-foreground [--card-spacing:--spacing(16)]">
+          <CardContent className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Ready to stop typing the same reply?
+            </h2>
+            <p className="mx-auto mt-4 max-w-md text-primary-foreground/80">
+              Join thousands of creators automating their DMs and growing on autopilot.
+            </p>
+            <GetStartedDialog
+              trigger={
+                <Button size="lg" variant="secondary" className="mt-8">
+                  Get started — it&apos;s free
+                </Button>
+              }
+            />
+          </CardContent>
+        </Card>
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto border-t border-zinc-100">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-zinc-500 sm:flex-row">
-          <div className="flex items-center gap-2 font-semibold text-zinc-900">
-            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-400 via-pink-500 to-purple-600 text-xs text-white">
-              ◎
+      <footer className="mt-auto border-t">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row">
+          <div className="flex items-center gap-2 font-semibold text-foreground">
+            <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <MessageCircle className="h-3.5 w-3.5" />
             </span>
             DMFlow
           </div>
           <p>© 2026 DMFlow. Not affiliated with Instagram or Meta.</p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-zinc-900">
+            <a href="#" className="transition-colors hover:text-foreground">
               Privacy
             </a>
-            <a href="#" className="hover:text-zinc-900">
+            <a href="#" className="transition-colors hover:text-foreground">
               Terms
             </a>
-            <a href="#" className="hover:text-zinc-900">
+            <a href="#" className="transition-colors hover:text-foreground">
               Contact
             </a>
           </div>
