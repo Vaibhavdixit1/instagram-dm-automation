@@ -35,7 +35,7 @@ export default function LogsPage() {
       ) : (
         <div className="table-shell overflow-x-auto">
           <table className="w-full min-w-[1080px] border-collapse text-left text-sm">
-            <thead className="bg-panel text-xs uppercase text-muted">
+            <thead className="bg-panel text-xs uppercase tracking-[0.08em] text-muted">
               <tr>
                 <th className="px-4 py-3">Created time</th>
                 <th className="px-4 py-3">Account</th>
@@ -50,7 +50,7 @@ export default function LogsPage() {
             </thead>
             <tbody>
               {visibleLogs.map((log) => (
-                <tr key={log.id} className="border-t border-line">
+                <tr key={log.id} className="border-t border-line transition hover:bg-panel/60">
                   <td className="px-4 py-3 text-muted">{formatDate(log.createdAt)}</td>
                   <td className="px-4 py-3 font-semibold text-ink">{accountNames.get(log.accountId) ?? "Deleted account"}</td>
                   <td className="px-4 py-3 text-muted">{log.ruleId ? ruleNames.get(log.ruleId) ?? "Deleted rule" : "No match"}</td>

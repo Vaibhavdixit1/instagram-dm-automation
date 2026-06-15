@@ -18,14 +18,14 @@ function Metric({
   tone: string;
 }) {
   return (
-    <div className="border border-line bg-white p-5 shadow-soft">
+    <div className="surface p-5">
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-muted">{label}</span>
-        <span className={`grid size-10 place-items-center rounded-md ${tone}`}>
+        <span className={`grid size-10 place-items-center rounded-lg ${tone}`}>
           <Icon size={19} />
         </span>
       </div>
-      <div className="mt-5 text-3xl font-bold text-ink">{value}</div>
+      <div className="mt-5 text-3xl font-bold text-ink">{value.toLocaleString()}</div>
     </div>
   );
 }
@@ -44,16 +44,19 @@ export default function DashboardPage() {
         <Metric label="Total DMs sent" value={sentLogs.length} icon={MessageSquareText} tone="bg-[#eef0f5] text-ink" />
       </div>
       <div className="mt-6 grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <section className="border border-line bg-white p-5 shadow-soft">
-          <h2 className="text-lg font-bold text-ink">Recent delivery</h2>
+        <section className="surface p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-bold text-ink">Recent delivery</h2>
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-muted">{logs.length} events</span>
+          </div>
           <div className="mt-4 space-y-3">
             {logs.slice(0, 4).map((log) => {
               const rule = rules.find((item) => item.id === log.ruleId);
               return (
-                <div key={log.id} className="flex items-center justify-between gap-4 border-t border-line pt-3 first:border-t-0 first:pt-0">
-                  <div>
+                <div key={log.id} className="flex items-center justify-between gap-4 rounded-lg border border-transparent p-2 transition hover:border-line hover:bg-panel/70">
+                  <div className="min-w-0">
                     <p className="font-semibold text-ink">{rule?.name ?? "Unmatched event"}</p>
-                    <p className="text-sm text-muted">{log.triggerText}</p>
+                    <p className="truncate text-sm text-muted">{log.triggerText}</p>
                   </div>
                   <span className={`status-pill ${log.status === "sent" ? "bg-[#e8f4f2] text-brand" : "bg-[#feece8] text-[#b83a27]"}`}>
                     {log.status}
@@ -61,19 +64,28 @@ export default function DashboardPage() {
                 </div>
               );
             })}
+            {logs.length === 0 ? <div className="grid min-h-32 place-items-center text-sm font-semibold text-muted">No delivery events yet</div> : null}
           </div>
         </section>
-        <section className="border border-line bg-white p-5 shadow-soft">
-          <h2 className="text-lg font-bold text-ink">Active keywords</h2>
+        <section className="surface p-5">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-bold text-ink">Active keywords</h2>
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-muted">
+              {rules.filter((rule) => rule.isActive).length} rules
+            </span>
+          </div>
           <div className="mt-4 flex flex-wrap gap-2">
             {rules
               .filter((rule) => rule.isActive)
               .flatMap((rule) => rule.keywords)
               .map((keyword) => (
-                <span key={keyword} className="rounded-md border border-line bg-panel px-2.5 py-1 text-sm font-semibold text-ink">
+                <span key={keyword} className="rounded-full border border-line bg-panel px-3 py-1 text-sm font-semibold text-ink">
                   {keyword}
                 </span>
               ))}
+            {rules.filter((rule) => rule.isActive).flatMap((rule) => rule.keywords).length === 0 ? (
+              <div className="grid min-h-32 flex-1 place-items-center text-sm font-semibold text-muted">No active keywords yet</div>
+            ) : null}
           </div>
         </section>
       </div>
