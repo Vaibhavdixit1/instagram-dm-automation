@@ -212,8 +212,8 @@ function PostPicker({
   };
 
   return (
-    <div className="fixed inset-0 z-30 grid place-items-center bg-black/35 p-4">
-      <div className="flex max-h-[82vh] w-full max-w-4xl flex-col border border-line bg-white shadow-soft">
+    <div className="fixed inset-0 z-30 grid place-items-center bg-black/40 p-4 backdrop-blur-sm">
+      <div className="flex max-h-[82vh] w-full max-w-4xl flex-col rounded-lg border border-line bg-white shadow-soft">
         <div className="flex items-center justify-between gap-4 border-b border-line p-4">
           <div>
             <h3 className="text-lg font-bold text-ink">Pick posts</h3>
@@ -233,7 +233,7 @@ function PostPicker({
                   key={post.id}
                   type="button"
                   onClick={() => togglePost(post.id)}
-                  className={`overflow-hidden border text-left transition ${
+                  className={`overflow-hidden rounded-lg border bg-white text-left transition ${
                     selected ? "border-brand ring-2 ring-brand/20" : "border-line hover:border-brand"
                   }`}
                 >
@@ -401,7 +401,7 @@ export default function RulesPage() {
       ) : (
         <div className="table-shell overflow-x-auto">
           <table className="w-full min-w-[1120px] border-collapse text-left text-sm">
-            <thead className="bg-panel text-xs uppercase text-muted">
+            <thead className="bg-panel text-xs uppercase tracking-[0.08em] text-muted">
               <tr>
                 <th className="px-4 py-3">Rule</th>
                 <th className="px-4 py-3">Account</th>
@@ -419,7 +419,7 @@ export default function RulesPage() {
                 const ruleAnalytics = analyticsByRuleId.get(dbRuleId(rule.id)) ?? emptyAnalytics(dbRuleId(rule.id));
 
                 return (
-                  <tr key={rule.id} className="border-t border-line align-top">
+                  <tr key={rule.id} className="border-t border-line align-top transition hover:bg-panel/60">
                     <td className="px-4 py-3">
                       <div className="font-semibold text-ink">{rule.name}</div>
                       <div className="mt-1 max-w-sm text-muted">{rule.firstMessage}</div>
@@ -477,8 +477,8 @@ export default function RulesPage() {
       )}
 
       {form ? (
-        <div className="fixed inset-0 z-20 grid place-items-center bg-black/35 p-4">
-          <form onSubmit={saveRule} className="w-full max-w-2xl border border-line bg-white p-5 shadow-soft">
+        <div className="fixed inset-0 z-20 grid place-items-center bg-black/40 p-4 backdrop-blur-sm">
+          <form onSubmit={saveRule} className="w-full max-w-2xl rounded-lg border border-line bg-white p-5 shadow-soft">
             <div className="flex items-center justify-between gap-4">
               <h2 className="text-lg font-bold text-ink">{form.id ? "Edit rule" : "Create rule"}</h2>
               <Button type="button" variant="ghost" title="Close" aria-label="Close" onClick={() => setForm(null)}>
@@ -488,11 +488,11 @@ export default function RulesPage() {
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <label className="sm:col-span-2">
                 <span className="text-sm font-semibold text-ink">Rule name</span>
-                <input className="mt-1 h-10 w-full rounded-md border border-line px-3" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
+                <input className="field mt-1 h-10 w-full px-3" value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
               </label>
               <label>
                 <span className="text-sm font-semibold text-ink">Instagram account</span>
-                <select className="mt-1 h-10 w-full rounded-md border border-line px-3" value={form.accountId} onChange={(event) => setForm({ ...form, accountId: event.target.value })}>
+                <select className="field mt-1 h-10 w-full px-3" value={form.accountId} onChange={(event) => setForm({ ...form, accountId: event.target.value })}>
                   {accounts.map((account) => (
                     <option key={account.id} value={account.id}>
                       @{account.instagramUsername}
@@ -502,21 +502,21 @@ export default function RulesPage() {
               </label>
               <label>
                 <span className="text-sm font-semibold text-ink">Trigger source</span>
-                <select className="mt-1 h-10 w-full rounded-md border border-line px-3" value={form.triggerSource} onChange={(event) => setForm({ ...form, triggerSource: event.target.value as RuleTriggerSource })}>
+                <select className="field mt-1 h-10 w-full px-3" value={form.triggerSource} onChange={(event) => setForm({ ...form, triggerSource: event.target.value as RuleTriggerSource })}>
                   <option value="dm">DM</option>
                   <option value="comment">Comment</option>
                 </select>
               </label>
               <label>
                 <span className="text-sm font-semibold text-ink">Match type</span>
-                <select className="mt-1 h-10 w-full rounded-md border border-line px-3" value={form.matchType} onChange={(event) => setForm({ ...form, matchType: event.target.value as MatchType })}>
+                <select className="field mt-1 h-10 w-full px-3" value={form.matchType} onChange={(event) => setForm({ ...form, matchType: event.target.value as MatchType })}>
                   <option value="contains">Contains</option>
                   <option value="exact">Exact</option>
                 </select>
               </label>
               <label>
                 <span className="text-sm font-semibold text-ink">Keywords</span>
-                <input className="mt-1 h-10 w-full rounded-md border border-line px-3" placeholder="pricing, cost" value={form.keywords} onChange={(event) => setForm({ ...form, keywords: event.target.value })} />
+                <input className="field mt-1 h-10 w-full px-3" placeholder="pricing, cost" value={form.keywords} onChange={(event) => setForm({ ...form, keywords: event.target.value })} />
               </label>
               {form.triggerSource === "comment" ? (
                 <div className="sm:col-span-2">
@@ -541,7 +541,7 @@ export default function RulesPage() {
                     {[0, 1, 2].map((index) => (
                       <input
                         key={index}
-                        className="h-10 w-full rounded-md border border-line px-3"
+                        className="field h-10 w-full px-3"
                         placeholder={`Reply option ${index + 1}`}
                         value={form.commentReplyOptions[index] ?? ""}
                         onChange={(event) => {
@@ -557,13 +557,13 @@ export default function RulesPage() {
               ) : null}
               <label className="sm:col-span-2">
                 <span className="text-sm font-semibold text-ink">DM message text</span>
-                <textarea className="mt-1 min-h-28 w-full rounded-md border border-line px-3 py-2" value={form.firstMessage} onChange={(event) => setForm({ ...form, firstMessage: event.target.value })} />
+                <textarea className="field mt-1 min-h-28 w-full px-3 py-2" value={form.firstMessage} onChange={(event) => setForm({ ...form, firstMessage: event.target.value })} />
               </label>
-              <div className="sm:col-span-2 grid gap-3 rounded-md border border-line bg-panel/60 p-3 sm:grid-cols-[minmax(0,180px)_1fr]">
+              <div className="sm:col-span-2 grid gap-3 rounded-lg border border-line bg-panel/60 p-3 sm:grid-cols-[minmax(0,180px)_1fr]">
                 <label>
                   <span className="text-sm font-semibold text-ink">Button label</span>
                   <input
-                    className="mt-1 h-10 w-full rounded-md border border-line px-3"
+                    className="field mt-1 h-10 w-full px-3"
                     maxLength={20}
                     placeholder="Open link"
                     value={form.linkButtonText}
@@ -573,7 +573,7 @@ export default function RulesPage() {
                 <label>
                   <span className="text-sm font-semibold text-ink">Button URL</span>
                   <input
-                    className="mt-1 h-10 w-full rounded-md border border-line px-3"
+                    className="field mt-1 h-10 w-full px-3"
                     placeholder="https://example.com"
                     value={form.linkUrl}
                     onChange={(event) => setForm({ ...form, linkUrl: event.target.value })}

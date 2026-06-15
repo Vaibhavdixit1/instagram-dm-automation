@@ -68,7 +68,7 @@ export default function AccountsPage() {
       ) : (
         <div className="table-shell overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse text-left text-sm">
-            <thead className="bg-panel text-xs uppercase text-muted">
+            <thead className="bg-panel text-xs uppercase tracking-[0.08em] text-muted">
               <tr>
                 <th className="px-4 py-3">Username</th>
                 <th className="px-4 py-3">Instagram user ID</th>
@@ -79,7 +79,7 @@ export default function AccountsPage() {
             </thead>
             <tbody>
               {accounts.map((account) => (
-                <tr key={account.id} className="border-t border-line">
+                <tr key={account.id} className="border-t border-line transition hover:bg-panel/60">
                   <td className="px-4 py-3 font-semibold text-ink">@{account.instagramUsername}</td>
                   <td className="px-4 py-3 text-muted">{account.instagramUserId}</td>
                   <td className="px-4 py-3">
